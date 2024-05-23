@@ -832,7 +832,8 @@ public:
   enum LayerKernel {
     SGEMV = 1, /**< placeholder for kernel name */
     DOT = 2,   /**< placeholder for kernel name */
-    SGEMM = 4  /**< placeholder for kernel name */
+    SGEMM = 4, /**< placeholder for kernel name */
+    ADD = 8    /**< placeholder for kernel name */
   };
 
   /**
