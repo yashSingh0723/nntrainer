@@ -30,6 +30,7 @@ extern opencl::Kernel kernel_sgemm;
 extern opencl::Kernel kernel_sgemm_fp16;
 extern opencl::Kernel kernel_dot;
 extern opencl::Kernel kernel_dot_fp16;
+extern opencl::Kernel kernel_addition;
 
 /**
  * @brief     sgemv computation : Y = A*X + Y
@@ -116,6 +117,16 @@ void sgemm_cl(const float *A, const float *B, float *C, unsigned int M,
 void sgemm_cl(const __fp16 *A, const __fp16 *B, __fp16 *C, unsigned int M,
               unsigned int N, unsigned int K, unsigned int lda,
               unsigned int ldb, unsigned int ldc, RunLayerContext &context);
+
+/**
+ * @brief     addition : sum of all input vectors
+ * @param[in] input float * for input
+ * @param[in] res float * for result/output
+ * @param[in] size number of elements in input vector
+ * @param[in] context RunLayerContext reference
+ */
+void addition_cl(const float *input, float *res, unsigned int size,
+                RunLayerContext &context);
 
 } // namespace nntrainer
 #endif /* __BLAS_KERNELS_H__ */
