@@ -27,6 +27,7 @@ namespace nntrainer {
 extern opencl::Kernel kernel_sgemv;
 extern opencl::Kernel kernel_sgemm;
 extern opencl::Kernel kernel_dot;
+extern opencl::Kernel kernel_addition;
 
 /**
  * @brief     sgemv computation : Y = A*X + Y
@@ -69,6 +70,16 @@ float dot_cl(const float *vecAdata, const float *vecXdata, unsigned int dim1,
 void sgemm_cl(const float *A, const float *B, float *C, unsigned int M,
               unsigned int N, unsigned int K, unsigned int lda,
               unsigned int ldb, unsigned int ldc, RunLayerContext &context);
+
+/**
+ * @brief     addition : sum of all input vectors
+ * @param[in] input float * for input
+ * @param[in] res float * for result/output
+ * @param[in] size number of elements in input vector
+ * @param[in] context RunLayerContext reference
+ */
+void addition_cl(const float *input, float *res, unsigned int size,
+                RunLayerContext &context);
 
 } // namespace nntrainer
 #endif /* __BLAS_KERNELS_H__ */
