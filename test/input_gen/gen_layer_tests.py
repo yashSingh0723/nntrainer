@@ -18,6 +18,7 @@ Copyright (C) 2021 Jihoon Lee <jhoon.it.lee@samsung.com>
 @author Jihoon Lee <jhoon.it.lee@samsung.com>
 @author Sungsik Kong <ss.kong@samsung.com>
 @author	Debadri Samaddar <s.debadri@samsung.com>
+@author	Niket Agarwal <niket.a@samsung.com>
 """
 
 import warnings
@@ -170,6 +171,21 @@ if __name__ == "__main__":
     conv = K.layers.Conv2D(2, 3, padding="same", dilation_rate=(2, 2))
     record_single(conv, (1, 3, 11, 11), "conv2d_sb_same_dilation")
     record_single(conv, (3, 3, 11, 11), "conv2d_mb_same_dilation")
+
+    conv = K.layers.UpSampling2D(size=(2, 2), interpolation="nearest", input_shape=(2, 2, 1))
+    record_single(conv, (1, 2, 2, 1), "upsample2d_2x2_nearest")  # input_shape: n h w c
+
+    conv = K.layers.UpSampling2D(size=(3, 3), interpolation="nearest", input_shape=(3, 3, 1))
+    record_single(conv, (1, 3, 3, 1), "upsample2d_3x3_nearest")
+
+    conv = K.layers.UpSampling2D(size=(2, 2), interpolation="bilinear", input_shape=(2, 2, 1))
+    record_single(conv, (1, 2, 2, 1), "upsample2d_2x2_bilinear")  # input_shape: n h w c
+
+    conv = K.layers.UpSampling2D(size=(3, 3), interpolation="bilinear", input_shape=(3, 3, 1))
+    record_single(conv, (1, 3, 3, 1), "upsample2d_3x3_bilinear")
+
+    conv = K.layers.UpSampling2D(size=(4, 4), interpolation="bilinear", input_shape=(10, 10, 1))
+    record_single(conv, (1, 10, 10, 1), "upsample2d_big_bilinear")
 
     # use float data to generate input here
     attention = K.layers.Attention()
@@ -889,3 +905,10 @@ if __name__ == "__main__":
     
     added = K.layers.Add()
     record_single(added, [(3, 4, 3, 4), (3, 4, 3, 4)], "added_w32a32_2")
+
+    record_single_fp16(
+        swiglu_layer,
+        [(2, 3, 3, 3), (2, 3, 3, 3)],
+        "swiglu",
+        input_type="float",
+    )

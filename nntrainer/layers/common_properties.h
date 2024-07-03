@@ -308,6 +308,50 @@ public:
 };
 
 /**
+ * @brief StartDimension property, start dimension to be flatten
+ *
+ */
+class StartDimension : public Axis {
+public:
+  StartDimension(unsigned int value = 1);
+  static constexpr const char *key = "start_dimension";
+  using prop_tag = uint_prop_tag;
+
+  /**
+   * @brief check if given value is valid
+   *
+   * @param v value to check
+   * @retval true if it is greater than 0 and smaller than
+   * ml::train::TensorDim::MAXDIM
+   * @retval false if it is smaller or equal to 0 or greater than
+   * ml::train::TensorDim::MAXDIM
+   */
+  bool isValid(const unsigned int &value) const override;
+};
+
+/**
+ * @brief EndDimension property, end dimension to be flatten
+ *
+ */
+class EndDimension : public Axis {
+public:
+  EndDimension(unsigned int value = ml::train::TensorDim::MAXDIM - 1);
+  static constexpr const char *key = "end_dimension";
+  using prop_tag = uint_prop_tag;
+
+  /**
+   * @brief check if given value is valid
+   *
+   * @param v value to check
+   * @retval true if it is greater than 0 and smaller than
+   * ml::train::TensorDim::MAXDIM
+   * @retval false if it is smaller or equal to 0 or greater than
+   * ml::train::TensorDim::MAXDIM
+   */
+  bool isValid(const unsigned int &value) const override;
+};
+
+/**
  * @brief SplitDimension property, dimension along which to split the input
  *
  */
@@ -869,10 +913,9 @@ struct ActivationTypeInfo {
     Enum::ACT_GELU,    Enum::ACT_QUICK_GELU, Enum::ACT_NONE,
     Enum::ACT_UNKNOWN};
 
-  static constexpr const char *EnumStr[] = {"tanh",    "sigmoid",    "relu",
-                                            "softmax", "leaky_relu", "swish",
-                                            "gelu",    "quick_gelu", "none",
-                                            "unknown"};
+  static constexpr const char *EnumStr[] = {
+    "tanh",  "sigmoid", "relu",       "softmax", "leaky_relu",
+    "swish", "gelu",    "quick_gelu", "none",    "unknown"};
 };
 
 /**
@@ -1066,6 +1109,34 @@ public:
   WeightRegularizer(
     nntrainer::WeightRegularizer value = nntrainer::WeightRegularizer::NONE);
   static constexpr const char *key = "weight_regularizer";
+};
+
+/**
+ * @brief     Enumeration of upsample type
+ * @todo Support torch and keras supported modes like bicubic
+ */
+struct UpsampleModeInfo {
+  /**
+   * @brief   Upsampling operation type class
+   */
+  enum class Interpolation { nearest, bilinear };
+
+  using Enum = Interpolation;
+  
+  static constexpr std::initializer_list<Interpolation> EnumList = {
+    Interpolation::nearest, Interpolation::bilinear};
+
+  static constexpr const char *EnumStr[] = {"nearest", "bilinear"};
+};
+
+/**
+ * @brief Upsample Type Enumeration Information
+ *
+ */
+class UpsampleMode final : public EnumProperty<UpsampleModeInfo> {
+public:
+  using prop_tag = enum_class_prop_tag;
+  static constexpr const char *key = "upsample";
 };
 
 /**

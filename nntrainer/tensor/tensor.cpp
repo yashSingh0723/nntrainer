@@ -249,11 +249,7 @@ bool Tensor::operator==(const Tensor &rhs) const {
     const uint8_t *_data = getData<uint8_t>();
     const uint8_t *_rdata = rhs.getData<uint8_t>();
     for (size_t i = 0; i < len; ++i) {
-      /** not checking sign change is intentional to avoid float calculation
-       * errors around 0 */
-      if ((std::isnan(_data[i]) && !std::isnan(_rdata[i])) ||
-          (!std::isnan(_data[i]) && std::isnan(_rdata[i])) ||
-          _data[i] != _rdata[i])
+      if (_data[i] != _rdata[i])
         return false;
     }
   } else if (dim.getDataType() == ml::train::TensorDim::DataType::QINT4) {
@@ -266,8 +262,7 @@ bool Tensor::operator==(const Tensor &rhs) const {
       data = decode_qint(_data[i / 2], (i % 2 == 0));
       rdata = decode_qint(_rdata[i / 2], (i % 2 == 0));
 
-      if ((std::isnan(data) && !std::isnan(rdata)) ||
-          (!std::isnan(data) && std::isnan(rdata)) || data != rdata)
+      if (data != rdata)
         return false;
     }
   }
@@ -3155,12 +3150,7 @@ void Tensor::save(std::ostream &file) {
                  "[Tensor::save] operation failed");
   } else if (this->getDataType() == ml::train::TensorDim::DataType::FP16) {
 #ifdef ENABLE_FP16
-    std::vector<_FP16> temp(size());
-    for (unsigned int i = 0; i < size(); ++i) {
-      temp[i] = static_cast<_FP16>(getData<_FP16>()[i]);
-    }
-
-    checkedWrite(file, (char *)temp.data(),
+    checkedWrite(file, (char *)getData<_FP16>(),
                  static_cast<std::streamsize>(size() * sizeof(_FP16)),
                  "[Tensor::save] operation failed");
 #else

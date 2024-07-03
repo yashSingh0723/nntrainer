@@ -7,6 +7,7 @@
  * @see    https://github.com/nnstreamer/nntrainer
  * @author Parichay Kapoor <pk.kapoor@samsung.com>
  * @author Debadri Samaddar <s.debadri@samsung.com>
+ * @author Niket Agarwal <niket.a@samsung.com>
  * @bug    No known bugs except for NYI items
  * @brief  This is the layer context for each layer
  */
@@ -829,14 +830,18 @@ public:
    * getKernelName function.
    */
   enum LayerKernel {
-    SGEMV = 1 << 0,      /**< placeholder for kernel name */
-    DOT = 1 << 1,        /**< placeholder for kernel name */
-    SGEMM = 1 << 2,      /**< placeholder for kernel name */
-    SGEMV_FP16 = 1 << 3, /**< placeholder for kernel name */
-    DOT_FP16 = 1 << 4,   /**< placeholder for kernel name */
-    SGEMM_FP16 = 1 << 5, /**< placeholder for kernel name */
+    SGEMV = 1 << 0,       /**< placeholder for kernel name */
+    DOT = 1 << 1,         /**< placeholder for kernel name */
+    SGEMM = 1 << 2,       /**< placeholder for kernel name */
+    SGEMV_FP16 = 1 << 3,  /**< placeholder for kernel name */
+    DOT_FP16 = 1 << 4,    /**< placeholder for kernel name */
+    SGEMM_FP16 = 1 << 5,  /**< placeholder for kernel name */
     ADD = 1 << 6,         /**< placeholder for kernel name */
-    ADD_FP16 = 1 << 7    /**< placeholder for kernel name */
+    ADD_FP16 = 1 << 7,    /**< placeholder for kernel name */
+    SWIGLU = 1 << 8,      /**< placeholder for kernel name */
+    SWIGLU_FP16 = 1 << 9, /**< placeholder for kernel name */
+    SSCAL = 1 << 10,      /**< placeholder for kernel name */
+    SSCAL_FP16 = 1 << 11, /**< placeholder for kernel name */
   };
 
   /**
