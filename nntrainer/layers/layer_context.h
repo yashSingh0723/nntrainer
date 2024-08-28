@@ -857,6 +857,8 @@ public:
     CONCAT_AXIS2_FP16 = 1ull << 25,  /**< placeholder for kernel name */
     CONCAT_AXIS1 = 1ull << 26,       /**< placeholder for kernel name */
     CONCAT_AXIS1_FP16 = 1ull << 27,  /**< placeholder for kernel name */
+    ROTARY_EMB = 1ull << 28,         /**< placeholder for kernel name */
+    ROTARY_EMB_FP16 = 1ull << 29,    /**< placeholder for kernel name */
   };
 
   /**
